@@ -1,0 +1,8 @@
+import type { Issue } from '../types/domain';
+import { api } from '../api/client';
+import { preferredLabel, typeLabel } from '../utils/labels';
+import { StatusBadge } from './IssueTable';
+export function IssueDetails({ issue, staff, onBack, onStatusChange }: { issue: Issue; staff?: boolean; onBack: () => void; onStatusChange: (issue: Issue) => void }) {
+  async function setStatus(status: Issue['status']) { await api.updateStatus(issue.id, status); onStatusChange({ ...issue, status }); }
+  return <section className="panel"><div className="detail-head"><h1>Zgłoszenie nr {issue.id}</h1><p>Zgłoszenie zostało przyjęte <StatusBadge status={issue.status}/></p></div><p className="muted">Twoje zgłoszenie zostało przyjęte i przekazane do odpowiedniego działu. Wkrótce rozpoczniemy jego realizację.</p><h3>Typ zgłoszenia</h3><p>{typeLabel[issue.type]}</p><h3>Dane zgłoszenia</h3><p>Pokój nr {issue.roomNumber}: {issue.title}</p><h3>Opis problemu</h3><p>{issue.description ?? 'Szczegóły dostępne w backendzie po rozszerzeniu DTO odpowiedzi.'}</p><h3>Zdjęcie (opcjonalnie)</h3><div className="attachment">{issue.photoUrl ? <a href={issue.photoUrl} target="_blank">Zobacz zdjęcie</a> : 'Brak załącznika'}</div><h3>Preferowany czas realizacji</h3><p>{issue.preferredTimeOption ? preferredLabel[issue.preferredTimeOption] : 'Nie podano'}</p><div className="actions">{staff && issue.status==='NEW' && <button className="purple" onClick={() => setStatus('OPEN')}>Rozpocznij realizację</button>}{staff && issue.status==='OPEN' && <button className="green" onClick={() => setStatus('CLOSED')}>Oznacz jako zrealizowane</button>}<button className="secondary" onClick={onBack}>Zamknij</button></div></section>;
+}
