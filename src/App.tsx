@@ -17,7 +17,7 @@ export default function App() {
   const [view, setView] = useState<"list" | "form" | "details">("list");
   const [selected, setSelected] = useState<Issue | null>(null);
   const [query, setQuery] = useState("");
-  const { notifications, notify } = useNotifications();
+  const { notifications, notify, markAllRead } = useNotifications();
   const {
     issues,
     onCreated: issueCreated,
@@ -80,6 +80,7 @@ export default function App() {
       technical={staff}
       onLogout={onLogout}
       notifications={notifications}
+      onMarkAllRead={markAllRead}
     >
       {view === "form" && (
         <IssueForm onCreated={onCreated} onCancel={() => setView("list")} />

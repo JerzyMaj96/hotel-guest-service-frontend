@@ -24,5 +24,8 @@ export const useNotifications = () => {
       ].slice(0, 12),
     );
 
-    return { notifications, notify };
+  const markAllRead = () =>
+    persistNotifications(notifications.map((n) => ({ ...n, read: true })));
+
+  return { notifications, notify, markAllRead };
 };
