@@ -7,7 +7,6 @@ export function Layout({
   children,
   technical,
   role,
-  setRole,
   onLogout,
   notifications,
   onMarkAllRead,
@@ -15,7 +14,6 @@ export function Layout({
   children: ReactNode;
   technical?: boolean;
   role: AppRole;
-  setRole: (r: AppRole) => void;
   onLogout: () => void;
   notifications: Notification[];
   onMarkAllRead: () => void;
@@ -40,15 +38,6 @@ export function Layout({
                 : "Panel managera"}
         </strong>
         <div>
-          <select
-            value={role}
-            onChange={(e) => setRole(e.target.value as AppRole)}
-          >
-            <option value="GUEST">Gość</option>
-            <option value="TECHNICIAN">Technik</option>
-            <option value="RECEPTIONIST">Recepcja</option>
-            <option value="MANAGER">Manager</option>
-          </select>
           <NotificationCenter
             notifications={notifications}
             onMarkAllRead={onMarkAllRead}
