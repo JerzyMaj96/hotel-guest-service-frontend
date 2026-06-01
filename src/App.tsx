@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
 import { Auth } from "./features/Auth";
 import { IssueForm } from "./features/IssueForm";
 import { IssueList } from "./pages/IssueList";
@@ -80,9 +80,11 @@ export default function App() {
         <Route
           path="/new"
           element={
-            role === "GUEST"
-              ? <IssueForm onCreated={onCreated} onCancel={() => navigate("/")} />
-              : <Navigate to="/" replace />
+            role === "GUEST" ? (
+              <IssueForm onCreated={onCreated} onCancel={() => navigate("/")} />
+            ) : (
+              <Navigate to="/" replace />
+            )
           }
         />
         <Route
