@@ -8,12 +8,11 @@ import { Layout } from "./components/Layout";
 import { useAuth } from "./hooks/useAuth";
 import { useIssues } from "./hooks/useIssues";
 import { useNotifications } from "./hooks/useNotifications";
-import type { AppRole, Issue } from "./types/domain";
+import type { Issue } from "./types/domain";
 import "./styles.css";
 
 export default function App() {
-  const { isAuthed, onLogin, onLogout } = useAuth();
-  const [role, setRole] = useState<AppRole>("GUEST");
+  const { isAuthed, role, onLogin, onLogout } = useAuth();
   const [view, setView] = useState<"list" | "form" | "details">("list");
   const [selected, setSelected] = useState<Issue | null>(null);
   const [query, setQuery] = useState("");
@@ -76,7 +75,7 @@ export default function App() {
   return (
     <Layout
       role={role}
-      setRole={setRole}
+      setRole={role}
       technical={staff}
       onLogout={onLogout}
       notifications={notifications}
