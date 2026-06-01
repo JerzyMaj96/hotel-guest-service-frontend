@@ -75,7 +75,6 @@ export default function App() {
   return (
     <Layout
       role={role}
-      setRole={role}
       technical={staff}
       onLogout={onLogout}
       notifications={notifications}
