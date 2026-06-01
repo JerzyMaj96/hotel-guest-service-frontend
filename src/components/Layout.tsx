@@ -31,7 +31,7 @@ export function Layout({
         <strong>
           {role === "GUEST"
             ? "Witaj, Jan!"
-            : role === "TECHNICIAN"
+            : role === "TECHNICAL_SUPPORT"
               ? "Panel techniczny"
               : role === "RECEPTIONIST"
                 ? "Panel recepcji"

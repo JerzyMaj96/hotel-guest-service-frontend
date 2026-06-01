@@ -4,7 +4,7 @@ export type PreferredTimeOption =
   | "AS_SOON_AS_POSSIBLE"
   | "WHEN_NOT_IN_ROOM"
   | "NO_URGENCY";
-export type AppRole = "GUEST" | "TECHNICIAN" | "RECEPTIONIST" | "MANAGER";
+export type AppRole = "GUEST" | "TECHNICAL_SUPPORT" | "RECEPTIONIST";
 
 export interface Issue {
   id: number;
