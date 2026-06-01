@@ -1,7 +1,10 @@
-export type IssueType = 'TECHNICAL' | 'RECEPTION';
-export type IssueStatus = 'NEW' | 'OPEN' | 'CLOSED';
-export type PreferredTimeOption = 'AS_SOON_AS_POSSIBLE' | 'WHEN_NOT_IN_ROOM' | 'NO_URGENCY';
-export type AppRole = 'GUEST' | 'TECHNICIAN' | 'RECEPTIONIST' | 'MANAGER';
+export type IssueType = "TECHNICAL" | "RECEPTION";
+export type IssueStatus = "NEW" | "OPEN" | "CLOSED";
+export type PreferredTimeOption =
+  | "AS_SOON_AS_POSSIBLE"
+  | "WHEN_NOT_IN_ROOM"
+  | "NO_URGENCY";
+export type AppRole = "GUEST" | "TECHNICIAN" | "RECEPTIONIST" | "MANAGER";
 
 export interface Issue {
   id: number;
@@ -30,7 +33,7 @@ export interface IssueCreateRequest {
 
 export interface Notification {
   id: string;
-  type: 'success' | 'info' | 'warning' | 'error';
+  type: "success" | "info" | "warning" | "error";
   title: string;
   message: string;
   issueId?: number;
