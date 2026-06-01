@@ -1,4 +1,5 @@
 import { useState } from "react";
+import type { Notification } from "../types/domain";
 
 export const useNotifications = () => {
   const [notifications, setNotifications] = useState<Notification[]>(() =>
