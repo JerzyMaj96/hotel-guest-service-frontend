@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { Plus, Search } from "lucide-react";
-import { IssueTable } from "./IssueTable";
+import { IssueTable } from "../features/IssueTable";
 import type { Issue } from "../types/domain";
 
 export const IssueList = ({

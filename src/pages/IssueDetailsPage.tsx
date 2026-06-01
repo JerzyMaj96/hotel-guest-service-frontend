@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { IssueDetails } from "./IssueDetails";
+import { IssueDetails } from "../features/IssueDetails";
 import type { Issue } from "../types/domain";
 
 export const IssueDetailsPage = ({
