@@ -5,12 +5,12 @@ const TOKEN_KEY = "hgss.jwt";
 
 export const authStore = {
   get token() {
-    return localStorage.getItem(TOKEN_KEY);
+    return sessionStorage.getItem(TOKEN_KEY);
   },
   set token(value: string | null) {
     value
-      ? localStorage.setItem(TOKEN_KEY, value)
-      : localStorage.removeItem(TOKEN_KEY);
+      ? sessionStorage.setItem(TOKEN_KEY, value)
+      : sessionStorage.removeItem(TOKEN_KEY);
   },
 };
 
