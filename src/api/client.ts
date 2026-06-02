@@ -24,6 +24,8 @@ async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
   if (!response.ok)
     throw new Error((await response.text()) || `HTTP ${response.status}`);
   if (response.status === 204) return undefined as T;
+  const accept = headers.get("Accept") ?? "";
+  if (accept.startsWith("image/")) return response.blob() as Promise<T>;
   const text = await response.text();
   try {
     return JSON.parse(text) as T;
@@ -59,6 +61,8 @@ export const api = {
     if (photo) form.append("photo", photo);
     return request<Issue>("/hgss/api/issues", { method: "POST", body: form });
   },
+  getPhoto: (fileName: string) =>
+    request<Blob>(`/hgss/api/issues/photos/${fileName}`, { headers: { Accept: "image/jpeg" } }),
   updateStatus: (issueId: number, issueStatus: IssueStatus) =>
     request<void>(
       `/hgss/api/issues/${issueId}/status?issueStatus=${issueStatus}`,
