@@ -62,7 +62,9 @@ export const api = {
     return request<Issue>("/hgss/api/issues", { method: "POST", body: form });
   },
   getPhoto: (fileName: string) =>
-    request<Blob>(`/hgss/api/issues/photos/${fileName}`, { headers: { Accept: "image/jpeg" } }),
+    request<Blob>(`/hgss/api/issues/photos/${fileName}`, {
+      headers: { Accept: "image/jpeg" },
+    }),
   updateStatus: (issueId: number, issueStatus: IssueStatus) =>
     request<void>(
       `/hgss/api/issues/${issueId}/status?issueStatus=${issueStatus}`,

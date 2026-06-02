@@ -1,7 +1,9 @@
+import { useEffect, useState } from "react";
 import type { Issue } from "../types/domain";
 import { api } from "../api/client";
 import { preferredLabel, typeLabel } from "../utils/labels";
 import { StatusBadge } from "./IssueTable";
+
 export function IssueDetails({
   issue,
   staff,
@@ -13,10 +15,23 @@ export function IssueDetails({
   onBack: () => void;
   onStatusChange: (issue: Issue) => void;
 }) {
-  async function setStatus(status: Issue["status"]) {
+  const [photoUrl, setPhotoUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (issue.photoUrl) {
+      api.getPhoto(issue.photoUrl).then((blob) => {
+        setPhotoUrl(URL.createObjectURL(blob));
+      });
+    }
+    return () => {
+      if (photoUrl) URL.revokeObjectURL(photoUrl);
+    };
+  }, [issue.photoUrl]);
+
+  const setStatus = async (status: Issue["status"]) => {
     await api.updateStatus(issue.id, status);
     onStatusChange({ ...issue, status });
-  }
+  };
   return (
     <section className="panel">
       <div className="detail-head">
@@ -42,10 +57,12 @@ export function IssueDetails({
       </p>
       <h3>Zdjęcie (opcjonalnie)</h3>
       <div className="attachment">
-        {issue.photoUrl ? (
-          <a href={issue.photoUrl} target="_blank">
-            Zobacz zdjęcie
-          </a>
+        {photoUrl ? (
+          <img
+            src={photoUrl}
+            alt="zdjęcie zgłoszenia"
+            style={{ maxWidth: "100%" }}
+          />
         ) : (
           "Brak załącznika"
         )}
