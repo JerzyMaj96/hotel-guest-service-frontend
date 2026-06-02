@@ -14,25 +14,34 @@ export const authStore = {
   },
 };
 
-async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
+const request = async <T>(path: string, init: RequestInit = {}): Promise<T> => {
   const headers = new Headers(init.headers);
+
   if (!headers.has("Content-Type") && !(init.body instanceof FormData))
     headers.set("Content-Type", "application/json");
+
   if (authStore.token)
     headers.set("Authorization", `Bearer ${authStore.token}`);
+
   const response = await fetch(`${API_URL}${path}`, { ...init, headers });
+
   if (!response.ok)
     throw new Error((await response.text()) || `HTTP ${response.status}`);
+
   if (response.status === 204) return undefined as T;
+
   const accept = headers.get("Accept") ?? "";
+
   if (accept.startsWith("image/")) return response.blob() as Promise<T>;
+
   const text = await response.text();
+
   try {
     return JSON.parse(text) as T;
   } catch {
     return text as T;
   }
-}
+};
 
 export const api = {
   login: (email: string, password: string) =>
@@ -50,8 +59,11 @@ export const api = {
       method: "POST",
       body: JSON.stringify(data),
     }),
+
   userIssues: () => request<Issue[]>("/hgss/api/issues/user-prof"),
+
   techIssues: () => request<Issue[]>("/hgss/api/issues/tech-prof"),
+
   createIssue: (issue: IssueCreateRequest, photo?: File | null) => {
     const form = new FormData();
     form.append(
@@ -61,10 +73,12 @@ export const api = {
     if (photo) form.append("photo", photo);
     return request<Issue>("/hgss/api/issues", { method: "POST", body: form });
   },
+
   getPhoto: (fileName: string) =>
     request<Blob>(`/hgss/api/issues/photos/${fileName}`, {
       headers: { Accept: "image/jpeg" },
     }),
+
   updateStatus: (issueId: number, issueStatus: IssueStatus) =>
     request<void>(
       `/hgss/api/issues/${issueId}/status?issueStatus=${issueStatus}`,
