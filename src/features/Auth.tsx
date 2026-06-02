@@ -7,13 +7,14 @@ export function Auth({
   onLogin: (
     email: string,
     password: string,
-    register?: { firstName: string; lastName: string },
+    register?: { firstName: string; lastName: string; phoneNumber?: string },
   ) => Promise<void>;
 }) {
   const [mode, setMode] = useState<"login" | "register">("login");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  async function submit(e: FormEvent<HTMLFormElement>) {
+
+  const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
     setLoading(true);
@@ -26,6 +27,7 @@ export function Auth({
           ? {
               firstName: String(f.get("firstName")),
               lastName: String(f.get("lastName")),
+              phoneNumber: String(f.get("phoneNumber")) || undefined,
             }
           : undefined,
       );
@@ -34,7 +36,8 @@ export function Auth({
     } finally {
       setLoading(false);
     }
-  }
+  };
+
   return (
     <div className="auth">
       <form onSubmit={submit} className="auth-card">
@@ -42,10 +45,13 @@ export function Auth({
         <h1>Rosewood Service Desk</h1>
         <p>System obsługi zgłoszeń hotelowych</p>
         {mode === "register" && (
-          <div className="grid2">
-            <input name="firstName" placeholder="Imię" required />
-            <input name="lastName" placeholder="Nazwisko" required />
-          </div>
+          <>
+            <div className="grid2">
+              <input name="firstName" placeholder="Imię" required />
+              <input name="lastName" placeholder="Nazwisko" required />
+            </div>
+            <input name="phoneNumber" type="tel" placeholder="Numer telefonu (opcjonalnie)" />
+          </>
         )}
         <input name="email" type="email" placeholder="Adres e-mail" required />
         <input

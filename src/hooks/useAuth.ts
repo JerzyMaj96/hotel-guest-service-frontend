@@ -17,7 +17,7 @@ export const useAuth = () => {
   const onLogin = async (
     email: string,
     password: string,
-    register?: { firstName: string; lastName: string },
+    register?: { firstName: string; lastName: string; phoneNumber?: string },
   ) => {
     if (register) await api.register({ ...register, email, password });
     authStore.token = await api.login(email, password);

@@ -54,6 +54,7 @@ export const api = {
     lastName: string;
     email: string;
     password: string;
+    phoneNumber?: string;
   }) =>
     request("/hgss/api/auth/register", {
       method: "POST",
